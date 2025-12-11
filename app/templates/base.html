@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Bug Tracker</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+</head>
+<body>
+  <header>
+    <h1><a href="{{ url_for('index') }}">Bug Tracker</a></h1>
+    <nav>
+      <a href="{{ url_for('tickets') }}">Tickets</a> |
+      <a href="{{ url_for('new_ticket') }}">New Ticket</a> |
+      <a href="{{ url_for('export_tickets') }}">Export</a> |
+      {% if user %}
+        <strong>{{ user.username }}</strong> ({{ user.role }}) |
+        <a href="{{ url_for('logout') }}">Logout</a>
+      {% else %}
+        <a href="{{ url_for('login') }}">Login</a> |
+        <a href="{{ url_for('register') }}">Register</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  <main>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul>
+        {% for category, msg in messages %}
+          <li><strong>{{ category }}</strong>: {{ msg }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Create New Ticket</h2>
+
+  <form method="post">
+    {{ form.hidden_tag() }}
+
+    <p>
+      {{ form.title.label }}<br>
+      {{ form.title() }}
+    </p>
+
+    <p>
+      {{ form.description.label }}<br>
+      {{ form.description() }}
+    </p>
+
+    <p>
+      {{ form.priority.label }}<br>
+      {{ form.priority() }}
+    </p>
+
+    <p>
+      {{ form.assignee.label }}<br>
+      {{ form.assignee() }}
+    </p>
+
+    <p>{{ form.submit() }}</p>
+  </form>
+{% endblock %}

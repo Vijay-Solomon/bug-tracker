@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>All Tickets</h2>
+
+  <form method="get" action="{{ url_for('tickets') }}">
+    Search: <input name="q" value="{{ q }}">
+
+    Status:
+    <select name="status">
+      <option value="">All</option>
+      {% for s in ['Open','In Progress','Resolved','Closed'] %}
+        <option value="{{ s }}" {% if status==s %}selected{% endif %}>{{ s }}</option>
+      {% endfor %}
+    </select>
+
+    Priority:
+    <select name="priority">
+      <option value="">All</option>
+      {% for p in ['Low','Medium','High','Critical'] %}
+        <option value="{{ p }}" {% if priority==p %}selected{% endif %}>{{ p }}</option>
+      {% endfor %}
+    </select>
+
+    <input type="submit" value="Filter">
+  </form>
+
+  <ul>
+    {% for t in tickets %}
+      <li>
+        <a href="{{ url_for('ticket_detail', ticket_id=t.id) }}">
+          #{{ t.id }} - {{ t.title }}
+        </a>
+        [{{ t.status }}] [{{ t.priority }}]
+        Reporter: {{ t.reporter.username if t.reporter else 'N/A' }}
+        | Assigned to: {{ t.assignee.username if t.assignee else 'Unassigned' }}
+      </li>
+    {% else %}
+      <li>No tickets found.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
